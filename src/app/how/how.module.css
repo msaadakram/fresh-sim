@@ -1,11 +1,15 @@
 .page {
-  --page-bg: linear-gradient(180deg, #eef3ff 0%, #f8fbff 40%, #ffffff 100%);
+  --page-bg: radial-gradient(circle at 10% 6%, #cce4ed 0%, #bbd9e5 46%, #b2d2df 100%);
   --card-bg: #ffffff;
-  --text-main: #122035;
-  --text-soft: #42526b;
-  --accent: #0f62fe;
-  --accent-soft: #e8f0ff;
-  --border: #d7e2f1;
+  --panel-bg: #f7fbfd;
+  --panel-alt: #f1f8fb;
+  --text-main: #13273e;
+  --text-soft: #48627a;
+  --accent: #173956;
+  --accent-soft: #dcecf3;
+  --border: #c7dbe5;
+  --hero-a: #9acadb;
+  --hero-b: #79b4c7;
 
   min-height: 100%;
   width: 100%;
@@ -23,14 +27,18 @@
   border: 1px solid var(--border);
   border-radius: 18px;
   padding: clamp(20px, 4vw, 44px);
-  box-shadow: 0 18px 44px rgba(16, 37, 80, 0.08);
+  box-shadow: 0 18px 46px rgba(23, 57, 86, 0.16);
 }
 
 .hero {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
+  padding: clamp(20px, 4vw, 36px);
+  border-radius: 16px;
+  border: 1px solid #9fc2cf;
+  background: linear-gradient(145deg, var(--hero-a), var(--hero-b));
 }
 
 .eyebrow {
@@ -41,18 +49,22 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   font-weight: 700;
-  color: var(--accent);
-  background: var(--accent-soft);
+  color: #f2fbff;
+  background: rgba(23, 57, 86, 0.24);
+  border: 1px solid rgba(239, 251, 255, 0.65);
 }
 
 .hero h1 {
   font-size: clamp(1.8rem, 4.8vw, 2.85rem);
   line-height: 1.18;
   letter-spacing: -0.01em;
+  color: #f5fcff;
+  max-width: 20ch;
+  text-wrap: balance;
 }
 
 .metaLine {
-  color: var(--text-soft);
+  color: #e0f0f7;
   font-size: 0.95rem;
   font-weight: 600;
 }
@@ -60,13 +72,13 @@
 .hero p {
   font-size: 1.05rem;
   line-height: 1.78;
-  color: var(--text-main);
+  color: #edf8fc;
 }
 
 .toc {
   margin-bottom: 30px;
   border: 1px solid var(--border);
-  background: #fbfdff;
+  background: #ffffff;
   border-radius: 14px;
   padding: 18px;
 }
@@ -83,14 +95,22 @@
 }
 
 .toc a {
-  color: #16356c;
+  color: #1a3f5f;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
 .section {
-  margin-bottom: 28px;
+  margin-bottom: 22px;
   scroll-margin-top: 18px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--panel-bg);
+  padding: clamp(14px, 2.6vw, 24px);
+}
+
+.section:nth-of-type(odd) {
+  background: var(--panel-alt);
 }
 
 .section h2 {
@@ -115,7 +135,8 @@
 .workflowList li {
   padding: 12px 12px 4px;
   border-left: 3px solid var(--accent);
-  background: #f9fbff;
+  background: #ffffff;
+  border: 1px solid #d5e4eb;
   border-radius: 8px;
 }
 
@@ -138,7 +159,7 @@
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 14px;
-  background: #fcfdff;
+  background: #ffffff;
 }
 
 .capsule h3 {
@@ -162,7 +183,7 @@
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 14px;
-  background: #fbfdff;
+  background: #ffffff;
 }
 
 .deepDiveCard h3 {
@@ -188,7 +209,7 @@
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 10px 12px;
-  background: #fbfdff;
+  background: #ffffff;
 }
 
 .faqItem summary {
@@ -205,15 +226,50 @@
 
 .ctaBox {
   margin-top: 18px;
-  border: 1px solid var(--border);
+  border: 1px solid #95bccb;
   border-radius: 12px;
   padding: 16px;
-  background: #f7faff;
+  background: linear-gradient(145deg, #89b9c9, #72a9bc);
+  color: #f2fbff;
+  position: relative;
+  overflow: hidden;
+}
+
+.ctaBox::before,
+.ctaBox::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(222, 244, 251, 0.2);
+}
+
+.ctaBox::before {
+  width: 130px;
+  height: 130px;
+  left: -22px;
+  bottom: -66px;
+}
+
+.ctaBox::after {
+  width: 90px;
+  height: 90px;
+  right: -12px;
+  top: -26px;
+}
+
+.ctaBox > * {
+  position: relative;
+  z-index: 1;
 }
 
 .ctaBox h3 {
   margin-bottom: 8px;
   font-size: 1.1rem;
+  color: #f9feff;
+}
+
+.ctaBox p {
+  color: #e7f6fc;
 }
 
 .homeLink {
@@ -223,14 +279,14 @@
   margin-top: 10px;
   padding: 10px 14px;
   border-radius: 999px;
-  background: var(--accent);
-  color: #ffffff;
+  background: #f4fbff;
+  color: #173956;
   font-weight: 700;
   transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
 .homeLink:hover {
-  opacity: 0.93;
+  opacity: 0.95;
   transform: translateY(-1px);
 }
 
@@ -256,13 +312,27 @@
 
 @media (prefers-color-scheme: dark) {
   .page {
-    --page-bg: linear-gradient(180deg, #03060d 0%, #0c1220 45%, #0f1726 100%);
-    --card-bg: #111a2b;
-    --text-main: #e7efff;
-    --text-soft: #b7c5e2;
-    --accent: #8db4ff;
-    --accent-soft: #1d2c4d;
-    --border: #223450;
+    --page-bg: radial-gradient(circle at 10% 6%, #1c3546 0%, #122737 44%, #0f1f2d 100%);
+    --card-bg: #122433;
+    --panel-bg: #142a3a;
+    --panel-alt: #152c3d;
+    --text-main: #e5f0f7;
+    --text-soft: #b3c7d6;
+    --accent: #9ac3d9;
+    --accent-soft: #27445a;
+    --border: #305062;
+    --hero-a: #2f5a70;
+    --hero-b: #244b60;
+  }
+
+  .hero {
+    border-color: #40657a;
+  }
+
+  .hero h1,
+  .metaLine,
+  .hero p {
+    color: #e6f4fb;
   }
 
   .toc,
@@ -271,10 +341,19 @@
   .deepDiveCard,
   .faqItem,
   .ctaBox {
-    background: #13203a;
+    background: #173246;
   }
 
   .toc a {
-    color: #bdd2ff;
+    color: #c1deee;
+  }
+
+  .ctaBox {
+    border-color: #3d667a;
+  }
+
+  .homeLink {
+    background: #d6eaf4;
+    color: #13334f;
   }
 }
