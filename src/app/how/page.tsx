@@ -401,6 +401,22 @@ const tocItems = [
   { href: "#final-notes", label: "Final implementation notes" },
 ];
 
+const estimatedReadMinutes = Math.max(1, Math.round(approximateWordCount / 230));
+
+function splitLeadSentence(text: string) {
+  const normalized = text.trim();
+  const match = normalized.match(/^(.{20,180}?[.!?])\s+([\s\S]+)$/);
+
+  if (!match) {
+    return { lead: normalized, rest: "" };
+  }
+
+  return {
+    lead: match[1],
+    rest: match[2],
+  };
+}
+
 export default function HowPage() {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -429,7 +445,7 @@ export default function HowPage() {
 
   return (
     <main className={styles.page}>
-      <article className={styles.article}>
+      <article className={styles.article} id="top">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -446,125 +462,216 @@ export default function HowPage() {
             Updated April 18, 2026
           </p>
 
-          {introParagraphs.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
+          <div className={styles.heroMetaRow}>
+            <span className={styles.heroMetaPill}>Blog Format</span>
+            <span className={styles.heroMetaPill}>{estimatedReadMinutes} min read</span>
+            <span className={styles.heroMetaPill}>Structured Table of Contents</span>
+          </div>
+
+          {introParagraphs.map((paragraph, index) => {
+            const { lead, rest } = splitLeadSentence(paragraph);
+
+            return (
+              <p key={`${index}-${lead.slice(0, 22)}`}>
+                <strong className={styles.paragraphLead}>{lead}</strong>
+                {rest ? ` ${rest}` : ""}
+              </p>
+            );
+          })}
         </header>
 
-        <nav className={styles.toc} aria-label="Table of contents">
-          <h2>Table of Contents</h2>
-          <ol>
-            {tocItems.map((item) => (
-              <li key={item.href}>
-                <a href={item.href}>{item.label}</a>
-              </li>
-            ))}
-          </ol>
-        </nav>
+        <div className={styles.blogLayout}>
+          <aside className={styles.sidebar}>
+            <nav className={styles.toc} aria-label="Table of contents">
+              <h2>Table of Contents</h2>
+              <p className={styles.tocHint}>
+                Jump directly to any section and continue your reading flow
+                without endless scrolling.
+              </p>
+              <ol>
+                {tocItems.map((item) => (
+                  <li key={item.href}>
+                    <a href={item.href}>{item.label}</a>
+                  </li>
+                ))}
+              </ol>
+              <a href="#top" className={styles.backToTop}>
+                Back to top ↑
+              </a>
+            </nav>
+          </aside>
 
-        <section id="workflow" className={styles.section}>
-          <h2>Official PTA Method: 10-Step Implementation Workflow</h2>
-          <p>
-            Use these ten steps as your default operating sequence for any SIM
-            ownership issue. Following sequence is as important as following
-            policy. Good sequence gives you cleaner evidence, fewer support
-            loops, and stronger escalation outcomes.
-          </p>
-          <ol className={styles.workflowList}>
-            {workflowSteps.map((step) => (
-              <li key={step.title}>
-                <h3>{step.title}</h3>
-                <p>{step.detail}</p>
-              </li>
-            ))}
-          </ol>
-        </section>
+          <div className={styles.blogContent}>
+            <section id="workflow" className={styles.section}>
+              <h2>Official PTA Method: 10-Step Implementation Workflow</h2>
+              <p>
+                <strong className={styles.paragraphLead}>
+                  Use these ten steps as your default operating sequence for any
+                  SIM ownership issue.
+                </strong>{" "}
+                Following sequence is as important as following policy. Good
+                sequence gives you cleaner evidence, fewer support loops, and
+                stronger escalation outcomes.
+              </p>
+              <ol className={styles.workflowList}>
+                {workflowSteps.map((step) => {
+                  const { lead, rest } = splitLeadSentence(step.detail);
 
-        {coreSections.map((section) => (
-          <section id={section.id} className={styles.section} key={section.id}>
-            <h2>{section.title}</h2>
-            {section.paragraphs.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </section>
-        ))}
+                  return (
+                    <li key={step.title}>
+                      <h3>{step.title}</h3>
+                      <p>
+                        <strong className={styles.paragraphLead}>{lead}</strong>
+                        {rest ? ` ${rest}` : ""}
+                      </p>
+                    </li>
+                  );
+                })}
+              </ol>
+            </section>
 
-        <section id="capsules" className={styles.section}>
-          <h2>Advanced Playbook: 24 PTA Compliance Capsules</h2>
-          <p>
-            The capsules below are intentionally repetitive in structure and
-            high in detail. Repetition is useful in compliance work because it
-            turns best practice into muscle memory. Use one capsule each week,
-            or run several during audits and incident reviews.
-          </p>
+            {coreSections.map((section) => (
+              <section id={section.id} className={styles.section} key={section.id}>
+                <h2>{section.title}</h2>
+                {section.paragraphs.map((paragraph, index) => {
+                  const { lead, rest } = splitLeadSentence(paragraph);
 
-          <div className={styles.capsuleGrid}>
-            {complianceCapsules.map((capsule) => (
-              <article key={capsule.id} className={styles.capsule}>
-                <h3>{capsule.title}</h3>
-                <p>{capsule.body}</p>
-              </article>
+                  return (
+                    <p key={`${section.id}-${index}`}>
+                      <strong className={styles.paragraphLead}>{lead}</strong>
+                      {rest ? ` ${rest}` : ""}
+                    </p>
+                  );
+                })}
+              </section>
             ))}
+
+            <section id="capsules" className={styles.section}>
+              <h2>Advanced Playbook: 24 PTA Compliance Capsules</h2>
+              <p>
+                <strong className={styles.paragraphLead}>
+                  The capsules below are intentionally repetitive in structure
+                  and high in detail.
+                </strong>{" "}
+                Repetition is useful in compliance work because it turns best
+                practice into muscle memory. Use one capsule each week, or run
+                several during audits and incident reviews.
+              </p>
+
+              <div className={styles.capsuleGrid}>
+                {complianceCapsules.map((capsule) => {
+                  const { lead, rest } = splitLeadSentence(capsule.body);
+
+                  return (
+                    <article key={capsule.id} className={styles.capsule}>
+                      <h3>{capsule.title}</h3>
+                      <p>
+                        <strong className={styles.paragraphLead}>{lead}</strong>
+                        {rest ? ` ${rest}` : ""}
+                      </p>
+                    </article>
+                  );
+                })}
+              </div>
+            </section>
+
+            <section id="deep-dives" className={styles.section}>
+              <h2>Extended Reference Library: 30 Operational Deep Dives</h2>
+              <p>
+                <strong className={styles.paragraphLead}>
+                  This extended library is purpose-built for users who need deep
+                  operational depth.
+                </strong>{" "}
+                It supports consultants, business administrators, family
+                coordinators, and support managers. Use these deep dives as
+                recurring training modules or audit blocks.
+              </p>
+
+              <div className={styles.deepDiveGrid}>
+                {operationalDeepDives.map((deepDive) => {
+                  const first = splitLeadSentence(deepDive.paragraphOne);
+                  const second = splitLeadSentence(deepDive.paragraphTwo);
+
+                  return (
+                    <article key={deepDive.id} className={styles.deepDiveCard}>
+                      <h3>{deepDive.title}</h3>
+                      <p>
+                        <strong className={styles.paragraphLead}>{first.lead}</strong>
+                        {first.rest ? ` ${first.rest}` : ""}
+                      </p>
+                      <p>
+                        <strong className={styles.paragraphLead}>{second.lead}</strong>
+                        {second.rest ? ` ${second.rest}` : ""}
+                      </p>
+                    </article>
+                  );
+                })}
+              </div>
+            </section>
+
+            <section id="faq" className={styles.section}>
+              <h2>Frequently Asked Questions</h2>
+              <p>
+                <strong className={styles.paragraphLead}>
+                  These answers focus on lawful, practical handling of
+                  real-world scenarios.
+                </strong>{" "}
+                If rules are updated by authorities or operators, always follow
+                the latest official direction first.
+              </p>
+
+              <div className={styles.faqList}>
+                {faqItems.map((faq) => {
+                  const { lead, rest } = splitLeadSentence(faq.answer);
+
+                  return (
+                    <details key={faq.question} className={styles.faqItem}>
+                      <summary>{faq.question}</summary>
+                      <p>
+                        <strong className={styles.paragraphLead}>{lead}</strong>
+                        {rest ? ` ${rest}` : ""}
+                      </p>
+                    </details>
+                  );
+                })}
+              </div>
+            </section>
+
+            <section id="final-notes" className={styles.section}>
+              <h2>Final Notes and Safe Next Actions</h2>
+              {closingParagraphs.map((paragraph, index) => {
+                const { lead, rest } = splitLeadSentence(paragraph);
+
+                return (
+                  <p key={`closing-${index}`}>
+                    <strong className={styles.paragraphLead}>{lead}</strong>
+                    {rest ? ` ${rest}` : ""}
+                  </p>
+                );
+              })}
+
+              <div className={styles.ctaBox}>
+                <h3>Quick Next Step</h3>
+                <p>
+                  <strong className={styles.paragraphLead}>
+                    If you want, start with one action right now: verify your
+                    current ownership baseline through official channels.
+                  </strong>{" "}
+                  Then create your first timestamped SIM hygiene note. Small,
+                  disciplined actions compound fast.
+                </p>
+                <div className={styles.ctaActions}>
+                  <Link href="/" className={styles.homeLink}>
+                    Back to homepage
+                  </Link>
+                  <a href="#top" className={styles.homeLinkAlt}>
+                    Jump to top
+                  </a>
+                </div>
+              </div>
+            </section>
           </div>
-        </section>
-
-        <section id="deep-dives" className={styles.section}>
-          <h2>Extended Reference Library: 30 Operational Deep Dives</h2>
-          <p>
-            This extended library is purpose-built for users who need deep
-            operational depth, including consultants, business administrators,
-            family coordinators, and support managers. Use these deep dives as
-            recurring training modules or audit blocks.
-          </p>
-
-          <div className={styles.deepDiveGrid}>
-            {operationalDeepDives.map((deepDive) => (
-              <article key={deepDive.id} className={styles.deepDiveCard}>
-                <h3>{deepDive.title}</h3>
-                <p>{deepDive.paragraphOne}</p>
-                <p>{deepDive.paragraphTwo}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section id="faq" className={styles.section}>
-          <h2>Frequently Asked Questions</h2>
-          <p>
-            These answers focus on lawful, practical handling of real-world
-            scenarios. If rules are updated by authorities or operators, always
-            follow the latest official direction first.
-          </p>
-
-          <div className={styles.faqList}>
-            {faqItems.map((faq) => (
-              <details key={faq.question} className={styles.faqItem}>
-                <summary>{faq.question}</summary>
-                <p>{faq.answer}</p>
-              </details>
-            ))}
-          </div>
-        </section>
-
-        <section id="final-notes" className={styles.section}>
-          <h2>Final Notes and Safe Next Actions</h2>
-          {closingParagraphs.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
-
-          <div className={styles.ctaBox}>
-            <h3>Quick Next Step</h3>
-            <p>
-              If you want, start with one action right now: verify your current
-              ownership baseline through official channels and create your first
-              timestamped SIM hygiene note. Small disciplined actions compound
-              fast.
-            </p>
-            <Link href="/" className={styles.homeLink}>
-              Back to homepage
-            </Link>
-          </div>
-        </section>
+        </div>
       </article>
     </main>
   );
