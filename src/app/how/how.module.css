@@ -1,0 +1,280 @@
+.page {
+  --page-bg: linear-gradient(180deg, #eef3ff 0%, #f8fbff 40%, #ffffff 100%);
+  --card-bg: #ffffff;
+  --text-main: #122035;
+  --text-soft: #42526b;
+  --accent: #0f62fe;
+  --accent-soft: #e8f0ff;
+  --border: #d7e2f1;
+
+  min-height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 28px 14px 72px;
+  background: var(--page-bg);
+  color: var(--text-main);
+  font-family: var(--font-geist-sans);
+}
+
+.article {
+  width: min(100%, 980px);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: clamp(20px, 4vw, 44px);
+  box-shadow: 0 18px 44px rgba(16, 37, 80, 0.08);
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.eyebrow {
+  width: fit-content;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.hero h1 {
+  font-size: clamp(1.8rem, 4.8vw, 2.85rem);
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+}
+
+.metaLine {
+  color: var(--text-soft);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.hero p {
+  font-size: 1.05rem;
+  line-height: 1.78;
+  color: var(--text-main);
+}
+
+.toc {
+  margin-bottom: 30px;
+  border: 1px solid var(--border);
+  background: #fbfdff;
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.toc h2 {
+  font-size: 1.22rem;
+  margin-bottom: 10px;
+}
+
+.toc ol {
+  margin-left: 20px;
+  display: grid;
+  gap: 8px;
+}
+
+.toc a {
+  color: #16356c;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.section {
+  margin-bottom: 28px;
+  scroll-margin-top: 18px;
+}
+
+.section h2 {
+  font-size: clamp(1.3rem, 3.8vw, 1.85rem);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.section p {
+  font-size: 1.03rem;
+  line-height: 1.75;
+  color: var(--text-main);
+  margin-bottom: 14px;
+}
+
+.workflowList {
+  margin-left: 22px;
+  display: grid;
+  gap: 18px;
+}
+
+.workflowList li {
+  padding: 12px 12px 4px;
+  border-left: 3px solid var(--accent);
+  background: #f9fbff;
+  border-radius: 8px;
+}
+
+.workflowList h3 {
+  font-size: 1.04rem;
+  margin-bottom: 6px;
+}
+
+.workflowList p {
+  margin-bottom: 10px;
+}
+
+.capsuleGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 14px;
+}
+
+.capsule {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  background: #fcfdff;
+}
+
+.capsule h3 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.capsule p {
+  margin-bottom: 0;
+  font-size: 0.98rem;
+  line-height: 1.72;
+}
+
+.deepDiveGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.deepDiveCard {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  background: #fbfdff;
+}
+
+.deepDiveCard h3 {
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.deepDiveCard p {
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+.deepDiveCard p:last-child {
+  margin-bottom: 0;
+}
+
+.faqList {
+  display: grid;
+  gap: 10px;
+}
+
+.faqItem {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #fbfdff;
+}
+
+.faqItem summary {
+  cursor: pointer;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.faqItem p {
+  margin-top: 8px;
+  margin-bottom: 0;
+  color: var(--text-soft);
+}
+
+.ctaBox {
+  margin-top: 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  background: #f7faff;
+}
+
+.ctaBox h3 {
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.homeLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #ffffff;
+  font-weight: 700;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.homeLink:hover {
+  opacity: 0.93;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+  .article {
+    border-radius: 14px;
+  }
+
+  .toc {
+    padding: 14px;
+  }
+
+  .toc ol,
+  .workflowList {
+    margin-left: 18px;
+  }
+
+  .section p,
+  .hero p {
+    line-height: 1.7;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .page {
+    --page-bg: linear-gradient(180deg, #03060d 0%, #0c1220 45%, #0f1726 100%);
+    --card-bg: #111a2b;
+    --text-main: #e7efff;
+    --text-soft: #b7c5e2;
+    --accent: #8db4ff;
+    --accent-soft: #1d2c4d;
+    --border: #223450;
+  }
+
+  .toc,
+  .workflowList li,
+  .capsule,
+  .deepDiveCard,
+  .faqItem,
+  .ctaBox {
+    background: #13203a;
+  }
+
+  .toc a {
+    color: #bdd2ff;
+  }
+}
